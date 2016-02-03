@@ -1,0 +1,14 @@
+INPUT(
+./debug\displayobject.o
+./debug\glwidget.o
+./debug\main.o
+./debug\mainwindow.o
+./debug\shaderprogram.o
+./debug\syntakshighlighter.o
+./debug\tetraeder.o
+./debug\vertex.o
+./debug\xyz.o
+./debug\moc_glwidget.o
+./debug\moc_mainwindow.o
+./debug\moc_syntakshighlighter.o
+);
