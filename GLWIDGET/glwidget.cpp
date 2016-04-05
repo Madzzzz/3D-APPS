@@ -16,6 +16,8 @@
 #include "displayobject.h"
 #include "tetraeder.h"
 #include "xyz.h"
+#include "oktaederball.h"
+#include "trianglesurface.h"
 #include "shaderprogram.h"
 
 int GLWidget::m_frame0 = 0;
@@ -32,10 +34,9 @@ GLWidget::GLWidget(MainWindow *parent) : QOpenGLWidget( parent),
 {
     m_timer = new QTimer();
     connect(m_timer, SIGNAL(timeout()), this, SLOT(update()));
-
-    m_tetraeder = new Tetraeder();
     m_context = 0;
-    m_xyz = new XYZ();
+    m_oktaederBall = new OktaederBall();
+    m_camera = new Camera;
     m_tid = new QTime(QTime::currentTime());
     m_tid->start();
 }
@@ -59,6 +60,26 @@ void GLWidget::update()
         QStatusBar* sb = m_parent->statusBar();
         sb->showMessage(QString::number(fps));
     }
+
+    if (m_tasteverdi != 0)
+    {
+        switch (m_tasteverdi)
+        {
+        case Qt::Key_Left : m_camera->left();
+            break;
+        case Qt::Key_Right : m_camera->right();
+            break;
+        case Qt::Key_Up: m_camera->up();
+            break;
+        case Qt::Key_Down: m_camera->down();
+            break;
+        case Qt::Key_Plus: m_camera->zoomin();
+            break;
+        case Qt::Key_Minus: m_camera->zoomout();
+            break;
+        }
+        m_tasteverdi = 0;
+    }
 }
 void GLWidget::repaint()
 {
@@ -69,8 +90,7 @@ void GLWidget::repaint()
 GLWidget::~GLWidget()
 {
     delete m_shaderProgramObjekt;
-    delete m_tetraeder;
-    delete m_xyz;
+    delete m_oktaederBall;
     delete m_timer;
     delete m_context;
     delete m_tid;
@@ -125,8 +145,7 @@ void GLWidget::init()
 
     qDebug() << "GLWidget init " << m_positionAttribute  << m_colorAttribute;
 
-    m_tetraeder->initVertexBufferObjects();
-    m_xyz->initVertexBufferObjects();
+    m_oktaederBall->initVertexBufferObjects();
 
     glEnableVertexAttribArray(m_positionAttribute);
     glEnableVertexAttribArray(m_colorAttribute);
@@ -143,6 +162,7 @@ void GLWidget::initializeGL()
 {
     //f = QOpenGLContext::currentContext()->functions();
     initializeOpenGLFunctions();
+    m_camera->setPosition(0, 0, -8);
 
     init();
     qDebug() << "GLWidget::initializeGL() utført" ;
@@ -176,7 +196,20 @@ void GLWidget::klikket()
         qDebug() << "uniforms m_uniformMVMatrix " << m_uniformMVMatrix;
         qDebug() << "uniforms m_uniformPMatrix " << m_uniformPMatrix;
     }
+
+    if (navn == "2")
+    {
+        m_camera->left();
+    }
+
 }
+
+void GLWidget::setTast(int tast)
+{
+    m_tasteverdi = tast;
+    //qDebug() << "tast " << m_tasteverdi;
+}
+
 
 void GLWidget::redigert()
 {
@@ -217,6 +250,13 @@ void GLWidget::paintGL()
     m_PMatrix.perspective(60, 4.0/3.0, 0.1, 100.0);
     m_shaderProgramObjekt->setUniformMatrix(m_uniformPMatrix, 1, GL_FALSE, m_PMatrix.constData());
 
+    /// - set projection matrix
+     m_camera->setToIdentity();
+     m_camera->perspective(60, 4.0/3.0, 0.1, 100.0);
+     m_shaderProgramObjekt->setUniformMatrix(m_uniformPMatrix, 1, GL_FALSE, m_camera->getProjectionMatrix().constData());
+     m_camera->view();
+
+
     m_MVMatrix.setToIdentity();
     m_MVMatrix.translate(0, 0, -2);
 
@@ -224,11 +264,12 @@ void GLWidget::paintGL()
     // Vi må likevel sette transpose parameteren til GL_FALSE
     m_MVMatrix.scale(0.5);
     m_shaderProgramObjekt->setUniformMatrix(m_uniformMVMatrix, 1, GL_FALSE, m_MVMatrix.constData());
-    m_xyz->draw(m_positionAttribute, m_colorAttribute);
     glEnable(GL_TEXTURE_2D);
     m_MVMatrix.rotate(100.0f * m_frame / 60, 1, 1, 1);
+    //m_shaderProgramObjekt->setUniformMatrix(m_uniformMVMatrix, 1, GL_FALSE, m_MVMatrix.constData());
+    //m_tetraeder->draw(m_positionAttribute, m_colorAttribute);
     m_shaderProgramObjekt->setUniformMatrix(m_uniformMVMatrix, 1, GL_FALSE, m_MVMatrix.constData());
-    m_tetraeder->draw(m_positionAttribute, m_colorAttribute);
+    m_oktaederBall->draw(m_positionAttribute, m_colorAttribute);
     ++m_frame; // brukes i update til å telle fps
 }
 

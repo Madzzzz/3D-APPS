@@ -7,10 +7,15 @@ HEADERS += \
     ../GLWIDGET/qopenglfunctions.h \
     ../GLWIDGET/shaderprogram.h \
     ../GLWIDGET/syntakshighlighter.h \
-    ../GLWIDGET/tetraeder.h \
     ../GLWIDGET/vec3.h \
     ../GLWIDGET/vertex.h \
-    ../GLWIDGET/xyz.h
+    ../GLWIDGET/oktaederball.h \
+    rollingball.h \
+    trianglesurface.h \
+    ../GLWIDGET/camera.h \
+    ../GLWIDGET/bezierlys.h \
+    ../GLWIDGET/hus.h \
+    ../GLWIDGET/plane.h
 
 SOURCES += \
     ../GLWIDGET/displayobject.cpp \
@@ -19,6 +24,9 @@ SOURCES += \
     ../GLWIDGET/mainwindow.cpp \
     ../GLWIDGET/shaderprogram.cpp \
     ../GLWIDGET/syntakshighlighter.cpp \
-    ../GLWIDGET/tetraeder.cpp \
     ../GLWIDGET/vertex.cpp \
-    ../GLWIDGET/xyz.cpp
+    ../GLWIDGET/oktaederball.cpp \
+    ../GLWIDGET/camera.cpp \
+    ../GLWIDGET/bezierlys.cpp \
+    ../GLWIDGET/hus.cpp \
+    ../GLWIDGET/plane.cpp

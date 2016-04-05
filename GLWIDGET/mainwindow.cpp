@@ -213,6 +213,17 @@ void MainWindow::redigert()
     buttons[5]->setText("start");
 }
 
+void MainWindow::keyReleaseEvent(QKeyEvent* event)
+{
+    int key = event->key();
+    GLWidget* glw = dynamic_cast<GLWidget*>(glWidget);
+    glw->setTast(key);
+    statusBar()->showMessage(QString(key));
+    //statusBar()->showMessage(event->text());
+    if (key == Qt::Key_Right)
+        statusBar()->showMessage("RIGHT");
+}
+
 
 
 

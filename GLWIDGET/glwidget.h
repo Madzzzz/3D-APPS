@@ -8,6 +8,7 @@
 #include <QOpenGLFunctions>
 #include <QTime>
 #include "vec3.h"
+#include "camera.h"
 
 class MainWindow;
 class DisplayObject;
@@ -31,6 +32,7 @@ public slots:
     void update();
     void repaint();
     //void initializeShader();
+    void setTast(int tast);
 
 protected:
     void initializeGL();
@@ -45,6 +47,7 @@ private:
     //! To allow interactive shader editing most of the initialization
     //! must also been done when a shader is changed
     void init();
+
     ShaderProgramObjekt* m_shaderProgramObjekt; // Erstatter QOpenGLShaderProgram* m_program;
 
     // Variabler til å lagre referanser for shadervariabler
@@ -65,9 +68,14 @@ private:
     MainWindow* m_parent;
     DisplayObject* m_tetraeder;
     DisplayObject* m_xyz;
+    DisplayObject* m_oktaederBall;
+    DisplayObject* m_triangleSurface;
+
+    int m_tasteverdi;
 
     QOpenGLContext* m_context;
     QTime* m_tid;
+    Camera* m_camera;
 
 };
 

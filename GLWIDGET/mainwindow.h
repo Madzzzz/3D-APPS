@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "syntakshighlighter.h"
+#include "camera.h"
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -46,6 +47,8 @@ public slots:
 signals:
 
 protected:
+
+    void keyReleaseEvent(QKeyEvent* event);
 
 private:
     void createMenu();

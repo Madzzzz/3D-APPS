@@ -5,9 +5,12 @@ INPUT(
 ./release\mainwindow.o
 ./release\shaderprogram.o
 ./release\syntakshighlighter.o
-./release\tetraeder.o
 ./release\vertex.o
-./release\xyz.o
+./release\oktaederball.o
+./release\camera.o
+./release\bezierlys.o
+./release\hus.o
+./release\plane.o
 ./release\moc_glwidget.o
 ./release\moc_mainwindow.o
 ./release\moc_syntakshighlighter.o

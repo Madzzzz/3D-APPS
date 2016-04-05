@@ -5,9 +5,12 @@ INPUT(
 ./debug\mainwindow.o
 ./debug\shaderprogram.o
 ./debug\syntakshighlighter.o
-./debug\tetraeder.o
 ./debug\vertex.o
-./debug\xyz.o
+./debug\oktaederball.o
+./debug\camera.o
+./debug\bezierlys.o
+./debug\hus.o
+./debug\plane.o
 ./debug\moc_glwidget.o
 ./debug\moc_mainwindow.o
 ./debug\moc_syntakshighlighter.o
